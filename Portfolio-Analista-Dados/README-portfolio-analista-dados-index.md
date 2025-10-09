@@ -7,7 +7,7 @@ Portfolio desenvolvido durante meses de estudos em análise de dados.
 Plataformas de Estudos: Udemy | Dio.Pro |
 
 ## 🛠️ Tecnologias
-- Notion Git | GitHub | Vscode | SQL | Python | Pandas | Power BI | 
+- Notion | Git | GitHub | Vscode | SQL | Python | Pandas | Power BI | 
 
 ## 📂 Estrutura Completa do Repositório
 
@@ -52,7 +52,7 @@ Plataformas de Estudos: Udemy | Dio.Pro |
     ├── 📁 queries-ecommerce/
     ├── 📁 queries-techstore/
     └── 📁 documentation/
-    
+    └── 📁 exercicios-revisao-semena4-sql/    
 
 3-sql-essencial/
 ├── 📁 semana-5/
@@ -75,6 +75,7 @@ Plataformas de Estudos: Udemy | Dio.Pro |
     ├── 📁 business-queries/
     ├── 📁 performance-tuning/
     └── 📁 documentation/
+    └── 📁 exercicios-revisao-semena8-sql/    
 
 4-python-dados/
 ├── 📁 semana-9/
@@ -199,6 +200,13 @@ Plataformas de Estudos: Udemy | Dio.Pro |
     └── 📄 interview-preparation.md
 
 10-datasets/
+├── 📁 kaggle/
+├── 📁 raw/
+├── 📁 processed/
+├── 📁 external/
+└── 📄 data-dictionary.md
+
+11-revisoes-gerais/
 ├── 📁 kaggle/
 ├── 📁 raw/
 ├── 📁 processed/
