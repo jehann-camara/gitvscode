@@ -76,6 +76,7 @@ Plataformas de Estudos: Udemy | Dio.Pro |
     ├── 📁 performance-tuning/
     └── 📁 documentation/
     └── 📁 exercicios-revisao-semena8-sql/    
+|── 📁 exercicios-revisao-semena5-8-sql/
 
 4-python-dados/
 ├── 📁 semana-9/
