@@ -1,0 +1,32 @@
+
+//Extensões Utilizadas // By Jehann Câmara
+
+// Produtividade
+{
+  "extensions": [
+    "ms-vscode.notepadplusplus-keybindings",
+    "usernamehw.errorlens",
+    "formulahendry.code-runner",
+    "ms-vscode.powershell"
+  ]
+}
+
+// Git e Github
+{
+  "extensions": [
+    "eamodio.gitlens",
+    "github.copilot",
+    "github.copilot-chat"
+  ]
+}
+
+// Sql e Banco de Dados
+{
+  "extensions" [
+    "ms-mssql.mssql",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-mssql"
+  ]
+}
+
+
