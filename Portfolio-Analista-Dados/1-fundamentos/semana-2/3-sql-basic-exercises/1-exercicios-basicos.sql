@@ -2,7 +2,8 @@
 -- 📝 Exercícios Básicos de SQL - Semana 2 // By Jehann Câmara
 -- Dataset: Loja Virtual Simples
 
-USE 
+USE PortfolioProjects;
+USE ecommerce;
 
 -- 1. SELEÇÃO SIMPLES
 -- Selecionar todos os produtos
