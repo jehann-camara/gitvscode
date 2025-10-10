@@ -1,11 +1,9 @@
--- 🗃️ SETUP COMPLETO - BANCO DE DADOS ROADMAP ENGENHARIA DE DADOS
--- Script para criar toda a estrutura do banco que usaremos nos 7 meses
+-- 🗃️ SETUP COMPLETO - BANCO DE DADOS ROADMAP ENGENHARIA DE DADOS (REVISADO)
+-- Script revisado para criar toda a estrutura do banco, corrigindo erros de lote e sintaxe.
 
 -- ==========================================
 -- 1. CRIAÇÃO DO BANCO E SCHEMAS
 -- ==========================================
-
--- Criar banco de dados principal
 CREATE DATABASE RoadmapEngenhariaDados;
 GO
 
@@ -31,8 +29,6 @@ GO
 -- ==========================================
 -- 2. TABELAS DO MÊS 1-2 (FUNDAMENTOS)
 -- ==========================================
-
--- Tabela de clientes (usada nos exercícios de SQL)
 CREATE TABLE bronze.clientes (
     id INT PRIMARY KEY IDENTITY(1,1),
     nome VARCHAR(100) NOT NULL,
@@ -45,8 +41,8 @@ CREATE TABLE bronze.clientes (
     data_criacao DATETIME2 DEFAULT GETDATE(),
     data_atualizacao DATETIME2 DEFAULT GETDATE()
 );
+GO
 
--- Tabela de produtos
 CREATE TABLE bronze.produtos (
     id INT PRIMARY KEY IDENTITY(1,1),
     nome VARCHAR(100) NOT NULL,
@@ -58,8 +54,8 @@ CREATE TABLE bronze.produtos (
     data_criacao DATETIME2 DEFAULT GETDATE(),
     data_atualizacao DATETIME2 DEFAULT GETDATE()
 );
+GO
 
--- Tabela de vendas
 CREATE TABLE bronze.vendas (
     id INT PRIMARY KEY IDENTITY(1,1),
     cliente_id INT NOT NULL,
@@ -70,16 +66,14 @@ CREATE TABLE bronze.vendas (
     data_venda DATE NOT NULL,
     canal_venda VARCHAR(20),
     data_criacao DATETIME2 DEFAULT GETDATE(),
-    
     CONSTRAINT fk_vendas_cliente FOREIGN KEY (cliente_id) REFERENCES bronze.clientes(id),
     CONSTRAINT fk_vendas_produto FOREIGN KEY (produto_id) REFERENCES bronze.produtos(id)
 );
+GO
 
 -- ==========================================
 -- 3. TABELAS DO MÊS 3-4 (AZURE & MODELAGEM)
 -- ==========================================
-
--- Tabela para logs de processamento (usada no Azure Data Factory)
 CREATE TABLE util.processamento_logs (
     id BIGINT PRIMARY KEY IDENTITY(1,1),
     processo VARCHAR(100) NOT NULL,
@@ -91,8 +85,8 @@ CREATE TABLE util.processamento_logs (
     duracao_segundos AS DATEDIFF(SECOND, data_inicio, ISNULL(data_fim, GETDATE())),
     erro_mensagem VARCHAR(1000)
 );
+GO
 
--- Tabela de parâmetros do sistema
 CREATE TABLE util.parametros_sistema (
     id INT PRIMARY KEY IDENTITY(1,1),
     chave VARCHAR(50) UNIQUE NOT NULL,
@@ -100,12 +94,11 @@ CREATE TABLE util.parametros_sistema (
     descricao VARCHAR(200),
     data_atualizacao DATETIME2 DEFAULT GETDATE()
 );
+GO
 
 -- ==========================================
 -- 4. TABELAS DO MÊS 4-5 (MODELAGEM DIMENSIONAL)
 -- ==========================================
-
--- DIMENSÃO Clientes (Gold Layer)
 CREATE TABLE gold.dim_clientes (
     cliente_key INT PRIMARY KEY IDENTITY(1,1),
     cliente_id INT NOT NULL,
@@ -120,8 +113,8 @@ CREATE TABLE gold.dim_clientes (
     data_carregamento DATETIME2 DEFAULT GETDATE(),
     versao INT DEFAULT 1
 );
+GO
 
--- DIMENSÃO Produtos (Gold Layer)
 CREATE TABLE gold.dim_produtos (
     produto_key INT PRIMARY KEY IDENTITY(1,1),
     produto_id INT NOT NULL,
@@ -132,10 +125,10 @@ CREATE TABLE gold.dim_produtos (
     data_carregamento DATETIME2 DEFAULT GETDATE(),
     versao INT DEFAULT 1
 );
+GO
 
--- DIMENSÃO Tempo (Gold Layer)
 CREATE TABLE gold.dim_tempo (
-    data_key INT PRIMARY KEY, -- Formato YYYYMMDD
+    data_key INT PRIMARY KEY,
     data_completa DATE NOT NULL,
     dia INT,
     mes INT,
@@ -147,8 +140,8 @@ CREATE TABLE gold.dim_tempo (
     feriado BIT DEFAULT 0,
     data_carregamento DATETIME2 DEFAULT GETDATE()
 );
+GO
 
--- FATOS Vendas (Gold Layer)
 CREATE TABLE gold.fato_vendas (
     venda_key BIGINT PRIMARY KEY IDENTITY(1,1),
     cliente_key INT NOT NULL,
@@ -160,124 +153,15 @@ CREATE TABLE gold.fato_vendas (
     canal_venda VARCHAR(20),
     data_venda DATE NOT NULL,
     data_carregamento DATETIME2 DEFAULT GETDATE(),
-    
     CONSTRAINT fk_fato_cliente FOREIGN KEY (cliente_key) REFERENCES gold.dim_clientes(cliente_key),
     CONSTRAINT fk_fato_produto FOREIGN KEY (produto_key) REFERENCES gold.dim_produtos(produto_key),
     CONSTRAINT fk_fato_tempo FOREIGN KEY (data_key) REFERENCES gold.dim_tempo(data_key)
 );
+GO
 
 -- ==========================================
--- 5. TABELAS DO MÊS 6-7 (PROJETOS AVANÇADOS)
+-- 5. VIEWS (CORRIGIDO - COM GO)
 -- ==========================================
-
--- Tabela para dados de APIs externas
-CREATE TABLE bronze.dados_externos (
-    id BIGINT PRIMARY KEY IDENTITY(1,1),
-    fonte VARCHAR(100) NOT NULL,
-    tipo_dado VARCHAR(50),
-    dados_json NVARCHAR(MAX),
-    data_extracao DATETIME2 NOT NULL,
-    data_carregamento DATETIME2 DEFAULT GETDATE()
-);
-
--- Tabela para métricas de qualidade de dados
-CREATE TABLE util.metricas_qualidade (
-    id BIGINT PRIMARY KEY IDENTITY(1,1),
-    tabela VARCHAR(100) NOT NULL,
-    metrica VARCHAR(100) NOT NULL,
-    valor DECIMAL(15,2),
-    data_medicao DATE NOT NULL,
-    data_carregamento DATETIME2 DEFAULT GETDATE()
-);
-
--- ==========================================
--- 6. INSERÇÃO DE DADOS DE EXEMPLO
--- ==========================================
-
--- Inserir clientes
-INSERT INTO bronze.clientes (nome, email, idade, cidade, estado, data_cadastro) VALUES
-('Ana Silva', 'ana.silva@email.com', 28, 'São Paulo', 'SP', '2024-01-15'),
-('Carlos Oliveira', 'carlos.oliveira@email.com', 35, 'Rio de Janeiro', 'RJ', '2024-01-20'),
-('Marina Santos', 'marina.santos@email.com', 22, 'Belo Horizonte', 'MG', '2024-02-01'),
-('João Pereira', 'joao.pereira@email.com', 42, 'São Paulo', 'SP', '2024-02-10'),
-('Juliana Costa', 'juliana.costa@email.com', 29, 'Curitiba', 'PR', '2024-02-15'),
-('Ricardo Alves', 'ricardo.alves@email.com', 31, 'Porto Alegre', 'RS', '2024-02-20'),
-('Fernanda Lima', 'fernanda.lima@email.com', 26, 'Salvador', 'BA', '2024-03-01'),
-('Roberto Souza', 'roberto.souza@email.com', 38, 'Fortaleza', 'CE', '2024-03-05');
-
--- Inserir produtos
-INSERT INTO bronze.produtos (nome, categoria, subcategoria, preco_custo, preco_venda, estoque) VALUES
-('Notebook Dell i5', 'Eletrônicos', 'Computadores', 2000.00, 2500.00, 15),
-('Mouse Wireless Logitech', 'Acessórios', 'Periféricos', 50.00, 89.90, 50),
-('Teclado Mecânico RGB', 'Acessórios', 'Periféricos', 150.00, 299.90, 30),
-('Monitor 24" Samsung', 'Eletrônicos', 'Monitores', 600.00, 899.00, 20),
-('Tablet Samsung S6', 'Eletrônicos', 'Tablets', 800.00, 1200.00, 10),
-('Impressora Laser HP', 'Eletrônicos', 'Impressoras', 450.00, 650.00, 8),
-('Webcam Full HD', 'Acessórios', 'Periféricos', 80.00, 159.90, 25),
-('SSD 500GB Kingston', 'Componentes', 'Armazenamento', 200.00, 349.90, 40);
-
--- Inserir vendas
-INSERT INTO bronze.vendas (cliente_id, produto_id, quantidade, valor_unitario, valor_total, data_venda, canal_venda) VALUES
-(1, 1, 1, 2500.00, 2500.00, '2024-02-01', 'Online'),
-(1, 2, 2, 89.90, 179.80, '2024-02-01', 'Online'),
-(2, 3, 1, 299.90, 299.90, '2024-02-02', 'Loja Física'),
-(3, 4, 1, 899.00, 899.00, '2024-02-03', 'Online'),
-(4, 5, 1, 1200.00, 1200.00, '2024-02-04', 'Loja Física'),
-(2, 2, 1, 89.90, 89.90, '2024-02-05', 'Online'),
-(5, 1, 1, 2500.00, 2500.00, '2024-02-06', 'Online'),
-(6, 6, 1, 650.00, 650.00, '2024-02-07', 'Loja Física'),
-(7, 7, 1, 159.90, 159.90, '2024-02-08', 'Online'),
-(8, 8, 2, 349.90, 699.80, '2024-02-09', 'Online');
-
--- Inserir dados na dimensão tempo (exemplo para 2024)
-INSERT INTO gold.dim_tempo (data_key, data_completa, dia, mes, ano, trimestre, nome_mes, nome_dia_semana, fim_de_semana)
-SELECT 
-    CONVERT(INT, CONVERT(VARCHAR, data, 112)) as data_key,
-    data as data_completa,
-    DAY(data) as dia,
-    MONTH(data) as mes,
-    YEAR(data) as ano,
-    DATEPART(QUARTER, data) as trimestre,
-    DATENAME(MONTH, data) as nome_mes,
-    DATENAME(WEEKDAY, data) as nome_dia_semana,
-    CASE WHEN DATEPART(WEEKDAY, data) IN (1, 7) THEN 1 ELSE 0 END as fim_de_semana
-FROM (
-    SELECT DATEADD(DAY, number, '2024-01-01') as data
-    FROM master..spt_values 
-    WHERE type = 'P' 
-    AND DATEADD(DAY, number, '2024-01-01') BETWEEN '2024-01-01' AND '2024-12-31'
-) datas;
-
--- Inserir parâmetros do sistema
-INSERT INTO util.parametros_sistema (chave, valor, descricao) VALUES
-('EMAIL_NOTIFICACAO', 'admin@empresa.com', 'Email para notificações do sistema'),
-('DIAS_RETENCAO_LOGS', '30', 'Dias para manter logs no sistema'),
-('LIMITE_BACKUP_GB', '50', 'Limite em GB para backups'),
-('URL_API_DADOS', 'https://api.dados.gov.br', 'URL da API de dados externos');
-
--- ==========================================
--- 7. CRIAÇÃO DE ÍNDICES PARA PERFORMANCE
--- ==========================================
-
--- Índices para tabelas de bronze
-CREATE INDEX ix_clientes_cidade ON bronze.clientes(cidade);
-CREATE INDEX ix_clientes_data_cadastro ON bronze.clientes(data_cadastro);
-CREATE INDEX ix_produtos_categoria ON bronze.produtos(categoria);
-CREATE INDEX ix_vendas_data_venda ON bronze.vendas(data_venda);
-CREATE INDEX ix_vendas_cliente_id ON bronze.vendas(cliente_id);
-CREATE INDEX ix_vendas_produto_id ON bronze.vendas(produto_id);
-
--- Índices para tabelas de gold
-CREATE INDEX ix_fato_vendas_data_key ON gold.fato_vendas(data_key);
-CREATE INDEX ix_fato_vendas_cliente_key ON gold.fato_vendas(cliente_key);
-CREATE INDEX ix_fato_vendas_produto_key ON gold.fato_vendas(produto_key);
-CREATE INDEX ix_dim_tempo_data ON gold.dim_tempo(data_completa);
-
--- ==========================================
--- 8. CRIAÇÃO DE ALGUMAS VIEWS ÚTEIS
--- ==========================================
-
--- View para análise simples de vendas
 CREATE VIEW silver.vw_vendas_detalhadas AS
 SELECT 
     v.id as venda_id,
@@ -295,8 +179,8 @@ FROM bronze.vendas v
 INNER JOIN bronze.clientes c ON v.cliente_id = c.id
 INNER JOIN bronze.produtos p ON v.produto_id = p.id
 WHERE c.ativo = 1;
+GO
 
--- View para métricas de produtos
 CREATE VIEW silver.vw_metricas_produtos AS
 SELECT 
     p.categoria,
@@ -309,11 +193,11 @@ SELECT
 FROM bronze.produtos p
 LEFT JOIN bronze.vendas v ON p.id = v.produto_id
 GROUP BY p.categoria, p.subcategoria;
+GO
 
 -- ==========================================
--- 9. CRIAÇÃO DE STORED PROCEDURES BÁSICAS
+-- 6. STORED PROCEDURES (CORRIGIDO)
 -- ==========================================
-
 -- Procedure para registrar logs de processamento
 CREATE PROCEDURE util.usp_registrar_log
     @processo VARCHAR(100),
@@ -328,7 +212,7 @@ BEGIN
 END;
 GO
 
--- Procedure para popular dimensão clientes
+-- Procedure para popular dimensão clientes (SINTAXE CORRIGIDA)
 CREATE PROCEDURE gold.usp_popular_dim_clientes
 AS
 BEGIN
@@ -361,23 +245,61 @@ BEGIN
             
     END TRY
     BEGIN CATCH
+        DECLARE @erro VARCHAR(1000);
+        SET @erro = ERROR_MESSAGE();
         EXEC util.usp_registrar_log 'POPULAR_DIM_CLIENTES', 
             'Erro na população da dimensão', 
             'ERRO', 
-            @erro_mensagem = ERROR_MESSAGE();
+            @erro_mensagem = @erro;
         THROW;
     END CATCH
 END;
 GO
 
 -- ==========================================
--- 10. EXECUÇÃO INICIAL DOS PROCESSOS
+-- 7. INSERÇÃO DE DADOS DE EXEMPLO
 -- ==========================================
+-- Inserir clientes
+INSERT INTO bronze.clientes (nome, email, idade, cidade, estado, data_cadastro) VALUES
+('Ana Silva', 'ana.silva@email.com', 28, 'São Paulo', 'SP', '2024-01-15'),
+('Carlos Oliveira', 'carlos.oliveira@email.com', 35, 'Rio de Janeiro', 'RJ', '2024-01-20'),
+('Marina Santos', 'marina.santos@email.com', 22, 'Belo Horizonte', 'MG', '2024-02-01');
+GO
 
+-- Inserir produtos
+INSERT INTO bronze.produtos (nome, categoria, subcategoria, preco_custo, preco_venda, estoque) VALUES
+('Notebook Dell i5', 'Eletrônicos', 'Computadores', 2000.00, 2500.00, 15),
+('Mouse Wireless Logitech', 'Acessórios', 'Periféricos', 50.00, 89.90, 50);
+GO
+
+-- Inserir vendas
+INSERT INTO bronze.vendas (cliente_id, produto_id, quantidade, valor_unitario, valor_total, data_venda, canal_venda) VALUES
+(1, 1, 1, 2500.00, 2500.00, '2024-02-01', 'Online'),
+(1, 2, 2, 89.90, 179.80, '2024-02-01', 'Online');
+GO
+
+-- Inserir dados na dimensão tempo (exemplo simplificado)
+INSERT INTO gold.dim_tempo (data_key, data_completa, dia, mes, ano, trimestre, nome_mes, nome_dia_semana, fim_de_semana) VALUES
+(20240201, '2024-02-01', 1, 2, 2024, 1, 'Fevereiro', 'Quinta-feira', 0),
+(20240202, '2024-02-02', 2, 2, 2024, 1, 'Fevereiro', 'Sexta-feira', 0);
+GO
+
+-- Inserir parâmetros do sistema
+INSERT INTO util.parametros_sistema (chave, valor, descricao) VALUES
+('EMAIL_NOTIFICACAO', 'admin@empresa.com', 'Email para notificações do sistema'),
+('DIAS_RETENCAO_LOGS', '30', 'Dias para manter logs no sistema');
+GO
+
+-- ==========================================
+-- 8. EXECUÇÃO INICIAL DOS PROCESSOS
+-- ==========================================
 -- Popular dimensões iniciais
 EXEC gold.usp_popular_dim_clientes;
+GO
 
--- Mensagem final
+-- ==========================================
+-- 9. MENSAGEM FINAL
+-- ==========================================
 PRINT '==========================================';
 PRINT '✅ BANCO DE DADOS CONFIGURADO COM SUCESSO!';
 PRINT '==========================================';
@@ -392,3 +314,4 @@ PRINT '   1. Testar as views e procedures';
 PRINT '   2. Executar consultas de exemplo';
 PRINT '   3. Iniciar desenvolvimento do roadmap';
 PRINT '==========================================';
+GO

@@ -16,3 +16,13 @@ SOURCE 00_Database_Setup/setup_database_completo.sql
 -- Executar script de verificação:
 SOURCE 00_Database_Setup/verificar_banco_dados.sql
 GO
+
+-- Caso seja necessário excluir o database RoadmapEngenhariaDados
+    USE master; -- Switch to the master database
+    O
+
+    -- Force disconnections and delete the database
+    ALTER DATABASE RoadmapEngenhariaDados SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    GO
+    DROP DATABASE RoadmapEngenhariaDados;
+    GO
