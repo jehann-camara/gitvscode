@@ -1,0 +1,11 @@
+# Arquivos de dados grandes
+*.csv
+*.json
+*.parquet
+
+# Senhas e credenciais
+.env
+config.ini
+
+# Logs
+*.log
