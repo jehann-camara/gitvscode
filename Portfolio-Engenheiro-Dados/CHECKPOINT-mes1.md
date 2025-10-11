@@ -17,4 +17,4 @@
 
 ## 📁 ESTRUTURA COMPLETA CRIADA ATÉ AGORA
 
-### **gitvscode\Portfolio-Engenheiro-Dados\01_Fundamentos\SQL_Basico\00_Database_Setup** ✅ **100% COMPLETO**
+### **[gitvscode\Portfolio-Engenheiro-Dados\01_Fundamentos\SQL_Basico\00_Database_Setup](https://github.com/jehann-camara/gitvscode/tree/main/Portfolio-Engenheiro-Dados/01_Fundamentos/SQL_Basico/00_Database_Setup)** ✅ **100% COMPLETO**
