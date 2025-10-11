@@ -8,38 +8,57 @@
 
 ## 📊 PROGRESSO SEMANAL
 
-### **SEMANA 1: PYTHON PANDAS** 🟡 **EM ANDAMENTO**
+### **SEMANA 1: PYTHON PANDAS** ✅ **COMPLETA**
 - [x] DataFrames e Series básicos
 - [x] Operações de leitura e escrita  
 - [x] Limpeza e transformação de dados
-- [ ] 5+ scripts práticos funcionando
-- [x] **Scripts criados: 2/5**
+- [x] Análise temporal e datas
+- [x] Limpeza e preparação de dados
+- [x] Visualização de dados
+- [x] **Scripts criados: 5/5** 🎉
 
-### **SEMANA 2: PANDAS AVANÇADO** ⬜
-- [ ] Agregações e groupby
-- [ ] Merge, join e concat
-- [ ] Análise temporal
-- [ ] 5+ scripts avançados
-
-### **SEMANA 3: SQL SERVER AVANÇADO** ⬜
+### **SEMANA 2: SQL SERVER AVANÇADO** ⬜
 - [ ] Stored procedures
 - [ ] Functions (escalares e table-valued)
 - [ ] Otimização de queries
 - [ ] 5+ procedures criadas
 
-### **SEMANA 4: INTEGRAÇÃO & PROJETO** ⬜
+### **SEMANA 3: INTEGRAÇÃO PYTHON + SQL** ⬜
 - [ ] Conexão Python + SQL Server
+- [ ] Execução de queries via Python
+- [ ] Carga de dados automática
+
+### **SEMANA 4: PROJETO ETL** ⬜
 - [ ] Projeto ETL completo
 - [ ] Documentação
 - [ ] Versionamento no GitHub
 
 ## 📁 ARQUIVOS CRIADOS - MÊS 2
     02_Programacao_Dados/
-    ├── 01_python_pandas/
+    ├── 01_python_pandas/ ✅ SEMANA 1 COMPLETA
     │ ├── 01_dataframes_basicos.py ✅
     │ ├── 02_operacoes_dataframes.py ✅
-    │ └── ... (próximos)
-    ├── 02_sql_server_avancado/ ⬜
+    │ ├── 03_analise_temporal.py ✅
+    │ ├── 04_limpeza_dados.py ✅
+    │ └── 05_visualizacao_dados.py ✅
+    ├── 02_sql_server_avancado/ ⬜ (próximo)
     ├── 03_integracao_python_sql/ ⬜
     ├── 04_projeto_etl_simples/ ⬜
     └── CHECKLIST_MES_2.md ✅
+
+## 🎯 CONTEÚDO CRIADO - PANDAS ✅
+1. ✅ **DataFrames Básicos** - Criação e operações fundamentais
+2. ✅ **Operações com DataFrames** - Agregações, groupby, funções
+3. ✅ **Análise Temporal** - Datas, tendências, sazonalidade  
+4. ✅ **Limpeza de Dados** - Validação, padronização, qualidade
+5. ✅ **Visualização** - Gráficos e análise exploratória
+
+## 📊 PRÓXIMOS PASSOS
+**SEMANA 2: SQL Server Avançado**
+- Stored Procedures e Functions
+- Otimização de queries
+- Trabalhando com o database `RoadmapEngenhariaDados`
+
+---
+**Progresso: 🟡 50% (5/10 scripts criados)**
+**SEMANA 1 COMPLETA!** 🎉
