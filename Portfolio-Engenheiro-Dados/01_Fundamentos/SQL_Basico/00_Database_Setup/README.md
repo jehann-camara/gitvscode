@@ -17,14 +17,9 @@ Este diretório contém os scripts para criar e configurar **dois ambientes de b
 
 ## 🚀 COMO USAR
 
-### OPÇÃO 1: SETUP INDIVIDUAL
+### **COMANDOS DE EXECUÇÃO:**
 
-# Para exercícios do Mês 1 (SQL básico)
-SOURCE 00_Database_Setup/setup_estudos_sql.sql
-
-# Para projetos dos Meses 3-7
-SOURCE 00_Database_Setup/setup_database_completo.sql
-
-### OPÇÃO 2: SETUP COMPLETO
--- Criar ambos os databases
-SOURCE 00_Database_Setup/setup_todos_databases.sql
+## Na ordem exata:
+SOURCE 00_Database_Setup/01_setup_estudos_sql.sql
+SOURCE 00_Database_Setup/02_setup_roadmap_principal.sql  
+SOURCE 00_Database_Setup/03_verificar_setup_completo.sql
